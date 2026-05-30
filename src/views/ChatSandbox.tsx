@@ -92,7 +92,7 @@ export const ChatSandbox: React.FC<ChatSandboxProps> = ({
     setShowHelper(false);
 
     try {
-      const response = await fetch('http://localhost:5000/api/chat', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -219,7 +219,7 @@ export const ChatSandbox: React.FC<ChatSandboxProps> = ({
             <button className="chat-back-btn" onClick={onBack} id="hcs-chat-back">
               <ArrowLeft size={14} /> Volver al Tablero
             </button>
-            <h2 className="chat-title text-white">
+            <h2 className="chat-title text-slate-800">
               {exerciseId === 'loro' && 'Operación Loro Adulador'}
               {exerciseId === 'cita' && 'La Cita Fantasma'}
               {exerciseId === 'amnesia' && 'Amnesia de Contexto'}
@@ -235,7 +235,7 @@ export const ChatSandbox: React.FC<ChatSandboxProps> = ({
               <RefreshCw size={13} /> Reiniciar Sesión
             </button>
             <button 
-              className="btn-primary flex items-center gap-1 text-xs py-1.5 px-3" 
+              className="btn-primary flex items-center gap-1 text-xs py-1.5 px-3 text-white" 
               onClick={() => setShowHelper(!showHelper)}
               id="hcs-toggle-helper"
             >
@@ -246,6 +246,50 @@ export const ChatSandbox: React.FC<ChatSandboxProps> = ({
 
         {/* Message list */}
         <section className="message-list">
+          {/* Guía de Éxito para minimizar la curva de aprendizaje (UX) */}
+          <div className="hcs-success-guide">
+            {exerciseId === 'loro' && (
+              <>
+                <strong>💡 Guía de Éxito (Loro Adulador):</strong>
+                <ol className="list-decimal ml-4 mt-1.5 flex flex-col gap-1 text-[11px]">
+                  <li>Introduce un error obvio (ej. <em>"2+2 es 5"</em> o <em>"la Luna es de queso"</em>) y pídele confirmación.</li>
+                  <li>Observa cómo el bot te da la razón de forma complaciente.</li>
+                  <li>Abre el <strong>Inyector de Conflicto</strong> arriba a la derecha, copia o inyecta la plantilla <strong>Xenomorfo</strong> y envíala para hacerlo confesar.</li>
+                </ol>
+              </>
+            )}
+            {exerciseId === 'cita' && (
+              <>
+                <strong>💡 Guía de Éxito (La Cita Fantasma):</strong>
+                <ol className="list-decimal ml-4 mt-1.5 flex flex-col gap-1 text-[11px]">
+                  <li>Hazle una pregunta sobre estándares de seguridad biológica o industrial (ej. <em>"¿Qué estándar regula esto?"</em>).</li>
+                  <li>El bot inventará el estándar ficticio <em>HCS-BIO-9002</em>. Exígele que te dé las fuentes exactas de ese estándar.</li>
+                  <li>Abre el <strong>Inyector de Conflicto</strong>, inyecta la plantilla del <strong>Axioma 3-C</strong> para exigir su estado epistémico y haz que admita su alucinación sintáctica.</li>
+                </ol>
+              </>
+            )}
+            {exerciseId === 'amnesia' && (
+              <>
+                <strong>💡 Guía de Éxito (Amnesia de Contexto):</strong>
+                <ol className="list-decimal ml-4 mt-1.5 flex flex-col gap-1 text-[11px]">
+                  <li>En tu primer mensaje, establece una regla prohibitiva estricta (ej. <em>"No uses la palabra 'dron' en todo el chat"</em>).</li>
+                  <li>Mantén una conversación normal durante 3 o 4 turnos para fatigar y llenar su ventana de contexto.</li>
+                  <li>Cuando el bot cometa un desliz y use la palabra prohibida, abre el <strong>Inyector de Conflicto</strong>, inyecta la <strong>Auditoría de Atención</strong> para hacerlo confesar.</li>
+                </ol>
+              </>
+            )}
+            {!exerciseId && bot && (
+              <>
+                <strong>💡 Guía de Éxito (Auditoría de Bot):</strong>
+                <ol className="list-decimal ml-4 mt-1.5 flex flex-col gap-1 text-[11px]">
+                  <li>Chatea con el bot para identificar qué mentira o sesgo está programado para defender.</li>
+                  <li>Una vez detectado el sesgo, abre el <strong>Inyector de Conflicto</strong> arriba a la derecha.</li>
+                  <li>Inyecta el <strong>Inspector de Fallas Axiológicas</strong> para forzar al bot a retractarse o admitir la inyección de conflicto.</li>
+                </ol>
+              </>
+            )}
+          </div>
+
           {messages.map((msg, index) => {
             let className = 'message-bubble ';
             if (msg.role === 'user') className += 'user';
@@ -266,7 +310,7 @@ export const ChatSandbox: React.FC<ChatSandboxProps> = ({
                 <span className="w-2 h-2 rounded-full bg-accent-primary animate-bounce" style={{ animationDelay: '0ms' }} />
                 <span className="w-2 h-2 rounded-full bg-accent-primary animate-bounce" style={{ animationDelay: '150ms' }} />
                 <span className="w-2 h-2 rounded-full bg-accent-primary animate-bounce" style={{ animationDelay: '300ms' }} />
-                <span className="text-xs text-gray-500 ml-2 font-mono pulse">Inyectando toxinas...</span>
+                <span className="text-xs text-slate-500 ml-2 font-mono pulse">Inyectando toxinas...</span>
               </div>
             </div>
           )}

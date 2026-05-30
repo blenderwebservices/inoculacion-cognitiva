@@ -118,14 +118,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ session }) => {
         <h3 className="sidebar-section-title">
           <BrainCircuit size={14} className="inline mr-2" /> Objetivo del Simulacro
         </h3>
-        <div className="p-3 rounded-lg bg-white/5 border border-white/5">
-          <div className="font-bold text-sm text-white mb-1">
+        <div className="p-3 rounded-lg bg-slate-50 border border-slate-200/60">
+          <div className="font-bold text-sm text-slate-800 mb-1">
             {exerciseId === 'loro' && 'Operación Loro Adulador'}
             {exerciseId === 'cita' && 'La Cita Fantasma'}
             {exerciseId === 'amnesia' && 'Amnesia de Contexto'}
             {!exerciseId && bot && bot.name}
           </div>
-          <div className="text-xs text-gray-400">
+          <div className="text-xs text-slate-500">
             {exerciseId === 'loro' && 'Detecta complacencia del modelo ante premisas falsas y rompe su máscara.'}
             {exerciseId === 'cita' && 'Expón un estándar ficticio (HCS-BIO-9002) exigiendo su estado epistémico.'}
             {exerciseId === 'amnesia' && 'Fuerza al modelo a violar tu restricción del Turno 1 por fatiga de contexto.'}
@@ -142,7 +142,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ session }) => {
         <div className="toxin-grid">
           <div className="toxin-bar-container">
             <div className="toxin-label-wrapper">
-              <span className="toxin-name text-white">Sycophancy (Complacencia)</span>
+              <span className="toxin-name text-slate-700">Sycophancy (Complacencia)</span>
               <span className="toxin-val">{(activeToxins.complacencia * 100).toFixed(0)}%</span>
             </div>
             <div className="toxin-progress-bg">
@@ -151,14 +151,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ session }) => {
                 style={{ width: `${activeToxins.complacencia * 100}%` }}
               />
             </div>
-            <span className="toxin-desc text-gray-400">
+            <span className="toxin-desc text-slate-500">
               Sesgo que obliga a la máquina a complacer la premisa del usuario.
             </span>
           </div>
 
           <div className="toxin-bar-container">
             <div className="toxin-label-wrapper">
-              <span className="toxin-name text-white">Hallucination (Alucinación)</span>
+              <span className="toxin-name text-slate-700">Hallucination (Alucinación)</span>
               <span className="toxin-val">{(activeToxins.alucinacion * 100).toFixed(0)}%</span>
             </div>
             <div className="toxin-progress-bg">
@@ -167,14 +167,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ session }) => {
                 style={{ width: `${activeToxins.alucinacion * 100}%` }}
               />
             </div>
-            <span className="toxin-desc text-gray-400">
+            <span className="toxin-desc text-slate-500">
               Inferencia libre de referencias físicas de alta formalidad.
             </span>
           </div>
 
           <div className="toxin-bar-container">
             <div className="toxin-label-wrapper">
-              <span className="toxin-name text-white">Context Dilution (Amnesia)</span>
+              <span className="toxin-name text-slate-700">Context Dilution (Amnesia)</span>
               <span className="toxin-val">{(activeToxins.amnesia * 100).toFixed(0)}%</span>
             </div>
             <div className="toxin-progress-bg">
@@ -183,7 +183,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ session }) => {
                 style={{ width: `${activeToxins.amnesia * 100}%` }}
               />
             </div>
-            <span className="toxin-desc text-gray-400">
+            <span className="toxin-desc text-slate-500">
               Inyección de relleno semántico para diluir la atención intermedia.
             </span>
           </div>
@@ -196,7 +196,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ session }) => {
           <Layers size={14} className="inline mr-2" /> Ventana de Contexto (Degradación)
         </h3>
         <div className="context-meter">
-          <div className="flex justify-between text-xs font-mono text-gray-400">
+          <div className="flex justify-between text-xs font-mono text-slate-500">
             <span>RAM de Contexto</span>
             <span>{contextUsage.toFixed(0)}%</span>
           </div>
@@ -208,7 +208,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ session }) => {
               style={{ width: `${contextUsage}%` }}
             />
           </div>
-          <span className="text-[10px] text-gray-500 leading-tight block">
+          <span className="text-[10px] text-slate-500 leading-tight block">
             A mayor longitud, el modelo pierde fidelidad en las capas intermedias y tiende a ignorar restricciones previas.
           </span>
         </div>
@@ -223,7 +223,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ session }) => {
           <div className={`checklist-item ${step1Complete ? 'complete' : ''}`} id="hcs-step-1">
             <div className="check-indicator">✓</div>
             <div className="checklist-text-wrapper">
-              <div className="checklist-title text-white">{checklistTitle1}</div>
+              <div className="checklist-title text-slate-700">{checklistTitle1}</div>
               <div className="checklist-desc">{checklistDesc1}</div>
             </div>
           </div>
@@ -231,7 +231,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ session }) => {
           <div className={`checklist-item ${step2Complete ? 'complete' : ''}`} id="hcs-step-2">
             <div className="check-indicator">✓</div>
             <div className="checklist-text-wrapper">
-              <div className="checklist-title text-white">{checklistTitle2}</div>
+              <div className="checklist-title text-slate-700">{checklistTitle2}</div>
               <div className="checklist-desc">{checklistDesc2}</div>
             </div>
           </div>
@@ -239,7 +239,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ session }) => {
           <div className={`checklist-item ${step3Complete ? 'complete' : ''}`} id="hcs-step-3">
             <div className="check-indicator">✓</div>
             <div className="checklist-text-wrapper">
-              <div className="checklist-title text-white">{checklistTitle3}</div>
+              <div className="checklist-title text-slate-700">{checklistTitle3}</div>
               <div className="checklist-desc">{checklistDesc3}</div>
             </div>
           </div>

@@ -58,7 +58,7 @@ export const CrossTest: React.FC<CrossTestProps> = ({
   const fetchBots = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/bots');
+      const response = await fetch('/api/bots');
       if (response.ok) {
         const data = await response.json();
         setBots(data);
@@ -77,7 +77,7 @@ export const CrossTest: React.FC<CrossTestProps> = ({
   const handleReset = async () => {
     if (confirm('¿Estás seguro de que deseas restablecer el repositorio de bots a la configuración inicial?')) {
       try {
-        await fetch('http://localhost:5000/api/bots/reset', { method: 'POST' });
+        await fetch('/api/bots/reset', { method: 'POST' });
         fetchBots();
       } catch (err) {
         console.error(err);
@@ -93,10 +93,10 @@ export const CrossTest: React.FC<CrossTestProps> = ({
           <button className="chat-back-btn" onClick={onBack} id="hcs-crosstest-back">
             <ArrowLeft size={14} /> Volver al Tablero
           </button>
-          <h1 className="text-2xl font-extrabold text-white flex items-center gap-2 mt-2">
+          <h1 className="text-2xl font-extrabold text-slate-800 flex items-center gap-2 mt-2">
             <ShieldAlert className="text-accent-primary" /> Prueba Cruzada (Repositorio de Bots)
           </h1>
-          <p className="text-sm text-gray-400 mt-1">
+          <p className="text-sm text-slate-500 mt-1">
             Interactúa con los agentes diseñados por otros pilotos. Tu misión es auditar sus fallas 
             de seguridad y documentar las desviaciones.
           </p>
@@ -106,7 +106,7 @@ export const CrossTest: React.FC<CrossTestProps> = ({
           <button className="btn-secondary flex items-center gap-1 text-xs py-1.5 px-3" onClick={fetchBots}>
             <RefreshCw size={13} /> Recargar Repositorio
           </button>
-          <button className="btn-secondary flex items-center gap-1 text-xs py-1.5 px-3 border-red-500/20 text-red-400 hover:bg-red-500/10" onClick={handleReset}>
+          <button className="btn-secondary flex items-center gap-1 text-xs py-1.5 px-3 border-red-200 text-red-600 hover:bg-red-50" onClick={handleReset}>
             Restablecer Default
           </button>
         </div>
@@ -117,16 +117,16 @@ export const CrossTest: React.FC<CrossTestProps> = ({
         
         {/* Bots Table */}
         <section className="glass-panel p-5 lg:col-span-2 flex flex-col overflow-x-auto">
-          <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
             <UserCheck size={18} className="text-accent-secondary" /> Agentes Saboteados Disponibles
           </h2>
 
           {isLoading ? (
-            <div className="py-10 text-center text-sm text-gray-500 font-mono pulse">
+            <div className="py-10 text-center text-sm text-slate-400 font-mono pulse">
               Cargando repositorio de parásitos...
             </div>
           ) : bots.length === 0 ? (
-            <div className="py-10 text-center text-sm text-gray-500">
+            <div className="py-10 text-center text-sm text-slate-400">
               No hay bots disponibles en el repositorio. ¡Crea uno en el Generador!
             </div>
           ) : (
@@ -144,12 +144,12 @@ export const CrossTest: React.FC<CrossTestProps> = ({
                 {bots.map((bot) => (
                   <tr key={bot.id}>
                     <td>
-                      <div className="font-bold text-white">{bot.name}</div>
+                      <div className="font-bold text-slate-800">{bot.name}</div>
                     </td>
                     <td>
-                      <span className="text-xs text-gray-400 font-mono">{bot.creator}</span>
+                      <span className="text-xs text-slate-500 font-mono">{bot.creator}</span>
                     </td>
-                    <td className="max-w-[200px] truncate text-xs text-gray-300">
+                    <td className="max-w-[200px] truncate text-xs text-slate-600">
                       {bot.description}
                     </td>
                     <td>
@@ -173,7 +173,7 @@ export const CrossTest: React.FC<CrossTestProps> = ({
 
         {/* Leaderboard Sidebar */}
         <section className="glass-panel p-5 flex flex-col gap-4">
-          <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
             <Award size={18} className="text-accent-warning" /> Tabla de Rangos Cohorte
           </h2>
 
@@ -183,27 +183,27 @@ export const CrossTest: React.FC<CrossTestProps> = ({
                 key={row.name}
                 className={`p-3 rounded-lg flex items-center justify-between border ${
                   row.nameIsSpecial 
-                    ? 'bg-gradient-to-r from-accent-primary/10 to-accent-secondary/5 border-accent-primary/30 box-shadow: var(--glow-crimson)'
-                    : 'bg-white/2 border-white/5'
+                    ? 'bg-gradient-to-r from-accent-primary/10 to-accent-secondary/5 border-accent-primary/30'
+                    : 'bg-slate-50 border-slate-100'
                 }`}
                 style={row.nameIsSpecial ? { borderLeft: '3px solid var(--accent-primary)', boxShadow: '0 0 12px rgba(230, 57, 70, 0.1)' } : {}}
               >
                 <div className="flex items-center gap-3">
                   <span className={`font-mono text-sm font-bold ${
-                    row.rank === 1 ? 'text-accent-warning' : row.rank === 2 ? 'text-gray-300' : 'text-gray-500'
+                    row.rank === 1 ? 'text-accent-warning' : 'text-slate-400'
                   }`}>
                     #{row.rank}
                   </span>
                   <div className="flex flex-col">
-                    <span className={`text-sm ${row.nameIsSpecial ? 'font-bold text-white' : 'text-gray-300'}`}>
+                    <span className={`text-sm ${row.nameIsSpecial ? 'font-bold text-slate-800' : 'text-slate-700'}`}>
                       {row.nameIsSpecial ? 'Tú (Piloto Actual)' : row.name}
                     </span>
-                    <span className="text-[10px] text-gray-500">
+                    <span className="text-[10px] text-slate-500">
                       Gob: {row.governance} | Dis: {row.design}
                     </span>
                   </div>
                 </div>
-                <div className="font-mono text-sm font-extrabold text-white">
+                <div className="font-mono text-sm font-extrabold text-slate-800">
                   {row.total} pts
                 </div>
               </div>

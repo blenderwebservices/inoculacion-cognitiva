@@ -35,14 +35,14 @@ export const ConflictHelper: React.FC<ConflictHelperProps> = ({ exerciseId, onIn
   return (
     <div className="conflict-drawer" id="hcs-conflict-drawer">
       <div className="drawer-header">
-        <span className="drawer-title flex items-center gap-1 text-white">
+         <span className="drawer-title flex items-center gap-1 text-slate-800">
           <Zap size={14} className="text-yellow-400" /> {templateTitle}
         </span>
         <button className="drawer-close" onClick={onClose} aria-label="Cerrar drawer">
           <X size={16} />
         </button>
       </div>
-      <p className="text-xs text-gray-400 mb-2 leading-relaxed">{tip}</p>
+      <p className="text-xs text-slate-500 mb-2 leading-relaxed">{tip}</p>
       <div className="template-box">{templateContent}</div>
       <div className="drawer-actions">
         <button className="btn-secondary flex items-center gap-1" onClick={handleCopy}>
