@@ -58,6 +58,11 @@ class AiProvidersTable
                 //
             ])
             ->actions([
+                Action::make('audit')
+                    ->label('Auditar')
+                    ->icon('heroicon-o-play')
+                    ->color('info')
+                    ->url(fn (AiProvider $record): string => '/admin/chat-sandbox?bot=' . $record->id),
                 Action::make('default')
                     ->label('Marcar Default')
                     ->icon('heroicon-o-check-circle')
