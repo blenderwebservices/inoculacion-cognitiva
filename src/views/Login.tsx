@@ -59,12 +59,12 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           <div className="w-12 h-12 bg-gradient-to-br from-accent-primary to-accent-secondary rounded-xl flex items-center justify-center font-extrabold text-2xl text-white shadow-lg">
             H
           </div>
-          <h1 className="text-xl font-bold text-slate-800 tracking-wider mt-2">HABANERO COGNITIVE SANDBOX</h1>
-          <p className="text-xs text-slate-500">Entrenamiento Adversarial de Inoculación</p>
+          <h1 className="text-xl font-bold tracking-wider mt-2">HABANERO COGNITIVE SANDBOX</h1>
+          <p className="text-xs text-slate-400">Entrenamiento Adversarial de Inoculación</p>
         </div>
 
         {error && (
-          <div className="p-3 rounded bg-red-50 border border-red-200 text-xs text-red-700 leading-normal flex items-start gap-2">
+          <div className="alert-danger" id="hcs-login-error">
             <ShieldAlert size={14} className="flex-shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
@@ -73,7 +73,7 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
         <form onSubmit={handleSubmit} id="hcs-login-form" className="flex flex-col gap-4">
           
           <div className="form-group mb-0">
-            <label className="form-label text-xs text-slate-600">Correo Electrónico</label>
+            <label className="form-label text-xs">Correo Electrónico</label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                 <User size={16} />
@@ -91,7 +91,7 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           </div>
 
           <div className="form-group mb-0">
-            <label className="form-label text-xs text-slate-600">Contraseña</label>
+            <label className="form-label text-xs">Contraseña</label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                 <Lock size={16} />
@@ -119,17 +119,17 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
         </form>
 
         {/* Quick Logins */}
-        <div className="border-t border-slate-100 pt-4 flex flex-col gap-2">
-          <span className="text-[10px] text-slate-500 text-center font-mono uppercase tracking-wider block">Acceso Rápido (Seeded Pilots)</span>
+        <div className="quick-login-container">
+          <span className="quick-login-title">Acceso Rápido (Seeded Pilots)</span>
           <div className="flex gap-2">
             <button 
-              className="btn-secondary flex-1 py-1.5 text-xs font-semibold text-emerald-700 border-emerald-200 hover:bg-emerald-50"
+              className="btn-secondary quick-login-btn user"
               onClick={() => handleQuickLogin('user')}
             >
               Piloto (User)
             </button>
             <button 
-              className="btn-secondary flex-1 py-1.5 text-xs font-semibold text-rose-700 border-rose-200 hover:bg-rose-50"
+              className="btn-secondary quick-login-btn admin"
               onClick={() => handleQuickLogin('admin')}
             >
               Administrador (Admin)

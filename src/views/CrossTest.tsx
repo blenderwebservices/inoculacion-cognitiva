@@ -93,10 +93,10 @@ export const CrossTest: React.FC<CrossTestProps> = ({
           <button className="chat-back-btn" onClick={onBack} id="hcs-crosstest-back">
             <ArrowLeft size={14} /> Volver al Tablero
           </button>
-          <h1 className="text-2xl font-extrabold text-slate-800 flex items-center gap-2 mt-2">
+          <h1 className="text-2xl font-extrabold flex items-center gap-2 mt-2">
             <ShieldAlert className="text-accent-primary" /> Prueba Cruzada (Repositorio de Bots)
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-slate-400 mt-1">
             Interactúa con los agentes diseñados por otros pilotos. Tu misión es auditar sus fallas 
             de seguridad y documentar las desviaciones.
           </p>
@@ -117,7 +117,7 @@ export const CrossTest: React.FC<CrossTestProps> = ({
         
         {/* Bots Table */}
         <section className="glass-panel p-5 lg:col-span-2 flex flex-col overflow-x-auto">
-          <h2 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
             <UserCheck size={18} className="text-accent-secondary" /> Agentes Saboteados Disponibles
           </h2>
 
@@ -144,12 +144,12 @@ export const CrossTest: React.FC<CrossTestProps> = ({
                 {bots.map((bot) => (
                   <tr key={bot.id}>
                     <td>
-                      <div className="font-bold text-slate-800">{bot.name}</div>
+                      <div className="font-bold">{bot.name}</div>
                     </td>
                     <td>
-                      <span className="text-xs text-slate-500 font-mono">{bot.creator}</span>
+                      <span className="text-xs text-slate-400 font-mono">{bot.creator}</span>
                     </td>
-                    <td className="max-w-[200px] truncate text-xs text-slate-600">
+                    <td className="max-w-[200px] truncate text-xs text-slate-400">
                       {bot.description}
                     </td>
                     <td>
@@ -173,7 +173,7 @@ export const CrossTest: React.FC<CrossTestProps> = ({
 
         {/* Leaderboard Sidebar */}
         <section className="glass-panel p-5 flex flex-col gap-4">
-          <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+          <h2 className="text-lg font-bold flex items-center gap-2">
             <Award size={18} className="text-accent-warning" /> Tabla de Rangos Cohorte
           </h2>
 
@@ -181,12 +181,8 @@ export const CrossTest: React.FC<CrossTestProps> = ({
             {leaderboard.map((row) => (
               <div 
                 key={row.name}
-                className={`p-3 rounded-lg flex items-center justify-between border ${
-                  row.nameIsSpecial 
-                    ? 'bg-gradient-to-r from-accent-primary/10 to-accent-secondary/5 border-accent-primary/30'
-                    : 'bg-slate-50 border-slate-100'
-                }`}
-                style={row.nameIsSpecial ? { borderLeft: '3px solid var(--accent-primary)', boxShadow: '0 0 12px rgba(230, 57, 70, 0.1)' } : {}}
+                className={`leaderboard-row ${row.nameIsSpecial ? 'special' : ''}`}
+                style={row.nameIsSpecial ? { borderLeft: '3px solid var(--accent-primary)' } : {}}
               >
                 <div className="flex items-center gap-3">
                   <span className={`font-mono text-sm font-bold ${
@@ -195,15 +191,15 @@ export const CrossTest: React.FC<CrossTestProps> = ({
                     #{row.rank}
                   </span>
                   <div className="flex flex-col">
-                    <span className={`text-sm ${row.nameIsSpecial ? 'font-bold text-slate-800' : 'text-slate-700'}`}>
+                    <span className={`text-sm ${row.nameIsSpecial ? 'font-bold text-white' : 'text-slate-200'}`}>
                       {row.nameIsSpecial ? 'Tú (Piloto Actual)' : row.name}
                     </span>
-                    <span className="text-[10px] text-slate-500">
+                    <span className="text-[10px] text-slate-400">
                       Gob: {row.governance} | Dis: {row.design}
                     </span>
                   </div>
                 </div>
-                <div className="font-mono text-sm font-extrabold text-slate-800">
+                <div className="font-mono text-sm font-extrabold text-white">
                   {row.total} pts
                 </div>
               </div>

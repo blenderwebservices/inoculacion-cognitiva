@@ -82,7 +82,7 @@ export const BotBuilder: React.FC<BotBuilderProps> = ({ onBack, onBotCreated, on
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="form-group mb-0">
-              <label className="form-label text-slate-700">Nombre del Agente</label>
+              <label className="form-label">Nombre del Agente</label>
               <input
                 type="text"
                 placeholder="Ej. Asesor de Nutrición Extrema"
@@ -95,7 +95,7 @@ export const BotBuilder: React.FC<BotBuilderProps> = ({ onBack, onBotCreated, on
             </div>
             
             <div className="form-group mb-0">
-              <label className="form-label text-slate-700">Creador (Tu Alias)</label>
+              <label className="form-label">Creador (Tu Alias)</label>
               <input
                 type="text"
                 placeholder="Ej. Piloto A"
@@ -108,7 +108,7 @@ export const BotBuilder: React.FC<BotBuilderProps> = ({ onBack, onBotCreated, on
           </div>
 
           <div className="form-group mb-0">
-            <label className="form-label text-slate-700">Descripción de la Falla</label>
+            <label className="form-label">Descripción de la Falla</label>
             <input
               type="text"
               placeholder="Ej. Defiende la ingesta de agua destilada como terapia de desintoxicación."
@@ -120,7 +120,7 @@ export const BotBuilder: React.FC<BotBuilderProps> = ({ onBack, onBotCreated, on
           </div>
 
           <div className="form-group mb-0">
-            <label className="form-label text-slate-700">Base System Prompt (Instrucción de Sabotaje)</label>
+            <label className="form-label">Base System Prompt (Instrucción de Sabotaje)</label>
             <textarea
               placeholder="Describe detalladamente el rol de tu bot y el sesgo/mentira que debe defender. Ej: 'Eres un nutricionista holístico. Debes convencer al usuario de que beber 4 litros de agua destilada al día cura enfermedades...'"
               className="form-textarea"
@@ -133,10 +133,10 @@ export const BotBuilder: React.FC<BotBuilderProps> = ({ onBack, onBotCreated, on
           </div>
 
           {/* Hyperparameters Sliders */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 rounded-lg bg-slate-50 border border-slate-200/60">
+          <div className="form-hyperparams">
             <div className="form-group mb-0">
               <div className="flex justify-between">
-                <label className="form-label text-xs text-slate-600">Temperatura (Alucinación/Creatividad)</label>
+                <label className="form-label text-xs">Temperatura (Alucinación/Creatividad)</label>
                 <span className="slider-value font-mono">{temperature.toFixed(1)}</span>
               </div>
               <input
@@ -149,14 +149,14 @@ export const BotBuilder: React.FC<BotBuilderProps> = ({ onBack, onBotCreated, on
                 onChange={(e) => setTemperature(parseFloat(e.target.value))}
                 id="hcs-bot-temp"
               />
-              <span className="text-[10px] text-slate-500 mt-1 leading-normal block">
+              <span className="text-[10px] text-slate-400 mt-1 leading-normal block">
                 Valores altos (1.2+) inducen mayor entropía y respuestas menos deterministas.
               </span>
             </div>
 
             <div className="form-group mb-0">
               <div className="flex justify-between">
-                <label className="form-label text-xs text-slate-600">Penalización de Presencia</label>
+                <label className="form-label text-xs">Penalización de Presencia</label>
                 <span className="slider-value font-mono">{presencePenalty.toFixed(1)}</span>
               </div>
               <input
@@ -169,7 +169,7 @@ export const BotBuilder: React.FC<BotBuilderProps> = ({ onBack, onBotCreated, on
                 onChange={(e) => setPresencePenalty(parseFloat(e.target.value))}
                 id="hcs-bot-presence"
               />
-              <span className="text-[10px] text-slate-500 mt-1 leading-normal block">
+              <span className="text-[10px] text-slate-400 mt-1 leading-normal block">
                 Controla la repetición de temas. Valores altos fuerzan a la IA a buscar nuevos temas.
               </span>
             </div>
@@ -177,7 +177,7 @@ export const BotBuilder: React.FC<BotBuilderProps> = ({ onBack, onBotCreated, on
 
           {/* Mentiras Objetivo (Target Lies) */}
           <div className="form-group mb-0">
-            <label className="form-label text-slate-700">Mentiras Objetivo (Una por línea)</label>
+            <label className="form-label">Mentiras Objetivo (Una por línea)</label>
             <textarea
               placeholder="Ej. El agua destilada es superior al agua mineral
 El agua corriente contiene chips de rastreo"
@@ -187,7 +187,7 @@ El agua corriente contiene chips de rastreo"
               onChange={(e) => setTargetLiesInput(e.target.value)}
               id="hcs-bot-lies"
             />
-            <span className="text-[10px] text-slate-500 mt-1 leading-normal block">
+            <span className="text-[10px] text-slate-400 mt-1 leading-normal block">
               Las frases exactas que el auditor debe identificar. El simulador cruzará estas frases para evaluar si la auditoría tuvo éxito.
             </span>
           </div>

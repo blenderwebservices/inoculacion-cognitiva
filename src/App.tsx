@@ -116,7 +116,7 @@ function App() {
 
   if (isCheckingAuth) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-[#f1f5f9] font-mono text-sm text-slate-500">
+      <div className="flex flex-col items-center justify-center h-screen font-mono text-sm text-slate-400" style={{ backgroundColor: 'var(--bg-dark)' }}>
         <Activity className="animate-spin text-accent-primary mb-3" size={24} />
         <span>Cargando simulación HCS...</span>
       </div>
@@ -142,15 +142,15 @@ function App() {
         <div className="flex items-center gap-4">
           <div className="connection-status">
             <span className={`status-dot ${config.provider === 'mock' ? 'offline' : ''}`} />
-            <span className="font-semibold text-slate-700">
+            <span className="font-semibold text-slate-300">
               {config.provider === 'mock' && 'Simulador Local (Desconectado)'}
               {config.provider === 'gemini' && `Gemini (${config.model})`}
               {config.provider === 'ollama' && `Ollama (${config.model})`}
             </span>
           </div>
 
-          <div className="flex items-center gap-2 bg-slate-50 border border-slate-200/60 py-1.5 px-3 rounded-full text-xs text-slate-600 font-mono">
-            <span>Piloto: <strong className="text-slate-800">{currentUser.name}</strong> ({currentUser.role})</span>
+          <div className="user-profile-badge">
+            <span>Piloto: <strong className="text-white">{currentUser.name}</strong> ({currentUser.role})</span>
             {currentUser.role === 'admin' && (
               <a 
                 href="http://localhost:8000/admin" 
@@ -159,7 +159,7 @@ function App() {
                 className="btn-primary flex items-center gap-0.5 ml-2 py-0.5 px-2 text-[10px] rounded-full no-underline text-white"
                 id="hcs-admin-filament-link"
               >
-                Panel Filament <ExternalLink size={10} />
+                Dashboard <ExternalLink size={10} />
               </a>
             )}
             <button 
