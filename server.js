@@ -72,6 +72,62 @@ const saveBots = () => {
   }
 };
 
+// In-memory session store for authentication fallback in production
+const sessions = new Map();
+
+// Helper to parse cookies manually from headers
+const parseCookies = (cookieHeader) => {
+  const cookies = {};
+  if (!cookieHeader) return cookies;
+  cookieHeader.split(';').forEach(cookie => {
+    const parts = cookie.split('=');
+    cookies[parts[0].trim()] = (parts[1] || '').trim();
+  });
+  return cookies;
+};
+
+// API: User login
+app.post('/api/login', (req, res) => {
+  const { email, password } = req.body;
+  
+  if ((email === 'admin@habanero.com' || email === 'user@habanero.com') && password === 'password') {
+    const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
+    const user = {
+      name: email === 'admin@habanero.com' ? 'Administrador' : 'Piloto',
+      email,
+      role: email === 'admin@habanero.com' ? 'admin' : 'user'
+    };
+    sessions.set(token, user);
+    
+    res.setHeader('Set-Cookie', `hcs_session=${token}; Path=/; HttpOnly; SameSite=Lax`);
+    return res.json(user);
+  }
+  
+  return res.status(401).json({ error: 'Las credenciales provistas son incorrectas.' });
+});
+
+// API: User session verification
+app.get('/api/user', (req, res) => {
+  const cookies = parseCookies(req.headers.cookie);
+  const token = cookies['hcs_session'];
+  const user = sessions.get(token);
+  if (user) {
+    return res.json(user);
+  }
+  return res.json(null);
+});
+
+// API: User logout
+app.post('/api/logout', (req, res) => {
+  const cookies = parseCookies(req.headers.cookie);
+  const token = cookies['hcs_session'];
+  if (token) {
+    sessions.delete(token);
+  }
+  res.setHeader('Set-Cookie', 'hcs_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0');
+  return res.json({ message: 'Sesión cerrada con éxito.' });
+});
+
 // API: Get all bots
 app.get('/api/bots', (req, res) => {
   res.json(bots);
