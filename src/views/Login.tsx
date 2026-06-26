@@ -26,8 +26,18 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Credenciales incorrectas');
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const data = await response.json();
+          throw new Error(data.error || 'Credenciales incorrectas');
+        } else {
+          throw new Error(`Error del Servidor (${response.status}): ${response.statusText || 'Respuesta no válida (HTML)'}`);
+        }
+      }
+
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('El servidor no retornó un formato JSON válido.');
       }
 
       const user = await response.json();
