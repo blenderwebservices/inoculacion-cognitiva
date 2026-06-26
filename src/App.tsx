@@ -153,7 +153,7 @@ function App() {
             <span>Piloto: <strong className="text-white">{currentUser.name}</strong> ({currentUser.role})</span>
             {currentUser.role === 'admin' && (
               <a 
-                href="http://localhost:8000/admin" 
+                href="/admin" 
                 target="_blank" 
                 rel="noreferrer" 
                 className="btn-primary flex items-center gap-0.5 ml-2 py-0.5 px-2 text-[10px] rounded-full no-underline text-white"
