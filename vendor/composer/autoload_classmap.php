@@ -30,6 +30,8 @@ return array(
     'AWS\\CRT\\OptionValue' => $vendorDir . '/aws/aws-crt-php/src/AWS/CRT/Options.php',
     'AWS\\CRT\\Options' => $vendorDir . '/aws/aws-crt-php/src/AWS/CRT/Options.php',
     'App\\Ai\\Agents\\CognitiveAgent' => $baseDir . '/app/Ai/Agents/CognitiveAgent.php',
+    'App\\Filament\\Pages\\ChatSandbox' => $baseDir . '/app/Filament/Pages/ChatSandbox.php',
+    'App\\Filament\\Pages\\Dashboard' => $baseDir . '/app/Filament/Pages/Dashboard.php',
     'App\\Filament\\Resources\\AiProviders\\AiProviderResource' => $baseDir . '/app/Filament/Resources/AiProviders/AiProviderResource.php',
     'App\\Filament\\Resources\\AiProviders\\Pages\\CreateAiProvider' => $baseDir . '/app/Filament/Resources/AiProviders/Pages/CreateAiProvider.php',
     'App\\Filament\\Resources\\AiProviders\\Pages\\EditAiProvider' => $baseDir . '/app/Filament/Resources/AiProviders/Pages/EditAiProvider.php',

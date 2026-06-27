@@ -775,6 +775,8 @@ class ComposerStaticInit36793882908b6cbdd344b5a4840231db
         'AWS\\CRT\\OptionValue' => __DIR__ . '/..' . '/aws/aws-crt-php/src/AWS/CRT/Options.php',
         'AWS\\CRT\\Options' => __DIR__ . '/..' . '/aws/aws-crt-php/src/AWS/CRT/Options.php',
         'App\\Ai\\Agents\\CognitiveAgent' => __DIR__ . '/../..' . '/app/Ai/Agents/CognitiveAgent.php',
+        'App\\Filament\\Pages\\ChatSandbox' => __DIR__ . '/../..' . '/app/Filament/Pages/ChatSandbox.php',
+        'App\\Filament\\Pages\\Dashboard' => __DIR__ . '/../..' . '/app/Filament/Pages/Dashboard.php',
         'App\\Filament\\Resources\\AiProviders\\AiProviderResource' => __DIR__ . '/../..' . '/app/Filament/Resources/AiProviders/AiProviderResource.php',
         'App\\Filament\\Resources\\AiProviders\\Pages\\CreateAiProvider' => __DIR__ . '/../..' . '/app/Filament/Resources/AiProviders/Pages/CreateAiProvider.php',
         'App\\Filament\\Resources\\AiProviders\\Pages\\EditAiProvider' => __DIR__ . '/../..' . '/app/Filament/Resources/AiProviders/Pages/EditAiProvider.php',
