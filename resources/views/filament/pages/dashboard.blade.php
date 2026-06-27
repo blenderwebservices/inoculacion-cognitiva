@@ -494,9 +494,74 @@
                         <span style="color: var(--text-muted);">0.024s (SYN)</span>
                     </div>
                 </div>
-                <div style="margin-top: auto; padding-top: 0.5rem; border-top: 1px solid rgba(255, 255, 255, 0.05); font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em;">
-                    BUFFER DE SEGURIDAD OPERACIONAL
+            <!-- User Stats Widget -->
+            <div class="hcs-bento-card hcs-bento-span-2-lg hcs-bento-span-2-md glow-info">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                    <span class="hcs-bento-badge info">MÉTRICAS DE PILOTOS</span>
+                    <svg style="width: 18px; height: 18px; color: var(--accent-info);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
                 </div>
+                <div style="display: flex; flex-direction: column; gap: 0.6rem; margin: 0.5rem 0;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 0.4rem;">
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">Pilotos Registrados</span>
+                        <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: bold; color: white;">{{ $totalUsers }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 0.4rem;">
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">Promedio de Gobernanza</span>
+                        <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: bold; color: var(--accent-success);">{{ $avgGovernance }} pts</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">Promedio de Diseño</span>
+                        <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: bold; color: var(--accent-primary);">{{ $avgDesign }} pts</span>
+                    </div>
+                </div>
+                @if (Auth::user()?->role === 'admin')
+                    <div style="margin-top: auto; padding-top: 0.8rem;">
+                        <a href="/admin/users" class="hcs-btn-primary" style="display: block; font-size: 0.7rem; padding: 0.4rem; text-decoration: none;">
+                            Gestionar Usuarios (CRUD)
+                        </a>
+                    </div>
+                @else
+                    <div style="font-size: 0.6rem; font-family: var(--font-mono); color: var(--text-dim); margin-top: auto; padding-top: 0.4rem;">
+                        SISTEMA DE PILOTOS // SEGURIDAD ACTIVA
+                    </div>
+                @endif
+            </div>
+
+            <!-- Agent Stats Widget -->
+            <div class="hcs-bento-card hcs-bento-span-2-lg hcs-bento-span-2-md glow-warning">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                    <span class="hcs-bento-badge warning">MÉTRICAS DE AGENTES LLM</span>
+                    <svg style="width: 18px; height: 18px; color: var(--accent-warning);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                    </svg>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.6rem; margin: 0.5rem 0;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 0.4rem;">
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">Agentes en Catálogo</span>
+                        <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: bold; color: white;">{{ $totalBots }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 0.4rem;">
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">Simulador Local (Mock)</span>
+                        <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: bold; color: var(--accent-success);">ACTIVO</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">Integración Externa</span>
+                        <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: bold; color: var(--accent-info);">Gemini / Ollama</span>
+                    </div>
+                </div>
+                @if (Auth::user()?->role === 'admin')
+                    <div style="margin-top: auto; padding-top: 0.8rem;">
+                        <a href="/admin/ai-providers" class="hcs-btn-secondary" style="display: block; font-size: 0.7rem; padding: 0.4rem; border-color: rgba(255, 183, 3, 0.3); text-decoration: none;">
+                            Configuración HCS (CRUD)
+                        </a>
+                    </div>
+                @else
+                    <div style="font-size: 0.6rem; font-family: var(--font-mono); color: var(--text-dim); margin-top: auto; padding-top: 0.4rem;">
+                        PROCESADOR DE AGENTES // LATENCIA_OK
+                    </div>
+                @endif
             </div>
 
             <!-- Section Divider Card: Advanced Modules -->

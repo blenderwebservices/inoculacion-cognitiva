@@ -29,6 +29,12 @@ class Dashboard extends BaseDashboard
     public array $bots = [];
     public array $leaderboard = [];
 
+    // Custom stats properties
+    public int $totalUsers = 0;
+    public float $avgGovernance = 0.0;
+    public float $avgDesign = 0.0;
+    public int $totalBots = 0;
+
     public function mount(): void
     {
         $user = Auth::user();
@@ -47,6 +53,19 @@ class Dashboard extends BaseDashboard
 
         $this->loadBots();
         $this->loadLeaderboard();
+        $this->loadCustomStats();
+    }
+
+    public function loadCustomStats(): void
+    {
+        $users = User::all();
+        $this->totalUsers = $users->count();
+        if ($this->totalUsers > 0) {
+            $this->avgGovernance = round($users->avg('governance_score'), 1);
+            $this->avgDesign = round($users->avg('design_score'), 1);
+        }
+
+        $this->totalBots = AiProvider::count();
     }
 
     public function loadBots(): void
