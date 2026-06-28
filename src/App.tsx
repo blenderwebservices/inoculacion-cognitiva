@@ -123,35 +123,50 @@ function App() {
     );
   }
 
+  const handleLoginSuccess = (user: AuthenticatedUser) => {
+    setCurrentUser(user);
+    // Request browser fullscreen when user logs in
+    try {
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen().catch(err => {
+          console.warn('Browser blocked automatic fullscreen request:', err);
+        });
+      }
+    } catch (e) {
+      console.error('Failed to trigger fullscreen:', e);
+    }
+  };
+
   if (!currentUser) {
-    return <Login onLoginSuccess={(user) => setCurrentUser(user)} />;
+    return <Login onLoginSuccess={handleLoginSuccess} />;
   }
 
   return (
     <div className="app-container">
-      {/* Header Banner */}
-      <header className="hcs-header" id="hcs-header">
-        <div className="brand-container">
-          <div className="brand-logo">H</div>
-          <div>
-            <div className="brand-name">HABANERO INSTITUTE</div>
-            <div className="brand-subtitle">Cognitive Sandbox v1.0</div>
+      {/* Header Banner - hidden in dashboard for fullscreen dashboard experience */}
+      {currentView !== 'dashboard' && (
+        <header className="hcs-header" id="hcs-header">
+          <div className="brand-container">
+            <div className="brand-logo">H</div>
+            <div>
+              <div className="brand-name">HABANERO INSTITUTE</div>
+              <div className="brand-subtitle">Cognitive Sandbox v1.0</div>
+            </div>
           </div>
-        </div>
-        
-        <div className="flex items-center gap-4">
-          <div className="connection-status">
-            <span className={`status-dot ${config.provider === 'mock' ? 'offline' : ''}`} />
-            <span className="font-semibold text-slate-300">
-              {config.provider === 'mock' && 'Simulador Local (Desconectado)'}
-              {config.provider === 'gemini' && `Gemini (${config.model})`}
-              {config.provider === 'ollama' && `Ollama (${config.model})`}
-            </span>
-          </div>
+          
+          <div className="flex items-center gap-4">
+            <div className="connection-status">
+              <span className={`status-dot ${config.provider === 'mock' ? 'offline' : ''}`} />
+              <span className="font-semibold text-slate-300">
+                {config.provider === 'mock' && 'Simulador Local (Desconectado)'}
+                {config.provider === 'gemini' && `Gemini (${config.model})`}
+                {config.provider === 'ollama' && `Ollama (${config.model})`}
+              </span>
+            </div>
 
-          <div className="user-profile-badge">
-            <span>Piloto: <strong className="text-white">{currentUser.name}</strong> ({currentUser.role})</span>
-            {currentUser.role === 'admin' && (
+            <div className="user-profile-badge">
+              <span>Piloto: <strong className="text-white">{currentUser.name}</strong> ({currentUser.role})</span>
               <a 
                 href="/admin" 
                 target="_blank" 
@@ -159,20 +174,20 @@ function App() {
                 className="btn-primary flex items-center gap-0.5 ml-2 py-0.5 px-2 text-[10px] rounded-full no-underline text-white"
                 id="hcs-admin-filament-link"
               >
-                Dashboard <ExternalLink size={10} />
+                Panel de Control <ExternalLink size={10} />
               </a>
-            )}
-            <button 
-              className="text-slate-400 hover:text-accent-primary ml-2 bg-none border-none cursor-pointer flex items-center gap-0.5"
-              onClick={handleLogout}
-              title="Cerrar Sesión"
-              id="hcs-logout-btn"
-            >
-              <LogOut size={12} />
-            </button>
+              <button 
+                className="text-slate-400 hover:text-accent-primary ml-2 bg-none border-none cursor-pointer flex items-center gap-0.5"
+                onClick={handleLogout}
+                title="Cerrar Sesión"
+                id="hcs-logout-btn"
+              >
+                <LogOut size={12} />
+              </button>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
 
       {/* Main Content Area */}
       <main className="overflow-hidden relative flex-1">
@@ -184,6 +199,8 @@ function App() {
             onNavigate={setCurrentView}
             governanceScore={governanceScore}
             designScore={designScore}
+            currentUser={currentUser}
+            onLogout={handleLogout}
           />
         )}
 

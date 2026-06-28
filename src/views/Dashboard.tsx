@@ -12,7 +12,12 @@ import {
   Activity, 
   Wifi, 
   Award,
-  ArrowRight
+  ArrowRight,
+  LogOut,
+  Maximize,
+  Minimize,
+  User,
+  LayoutGrid
 } from 'lucide-react';
 
 interface DashboardProps {
@@ -22,6 +27,8 @@ interface DashboardProps {
   onNavigate: (view: 'dashboard' | 'builder' | 'crosstest') => void;
   governanceScore: number;
   designScore: number;
+  currentUser: { name: string; email: string; role: 'admin' | 'user' };
+  onLogout: () => void;
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({
@@ -30,8 +37,32 @@ export const Dashboard: React.FC<DashboardProps> = ({
   onSelectExercise,
   onNavigate,
   governanceScore,
-  designScore
+  designScore,
+  currentUser,
+  onLogout
 }) => {
+  const [isFullscreen, setIsFullscreen] = React.useState(!!document.fullscreenElement);
+
+  React.useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const handleToggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.warn('Error entering fullscreen:', err);
+      });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
+
   return (
     <div className="dashboard-content" id="hcs-dashboard">
       
@@ -44,7 +75,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <Brain size={150} />
           </div>
           <div>
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center justify-between gap-2 mb-2">
               <span className="bento-badge crimson">NEURAL LINK: ACTIVE CONSOLE</span>
               <span className="text-xs text-slate-500 font-mono">SYS_VER::1.0.0</span>
             </div>
@@ -55,9 +86,40 @@ export const Dashboard: React.FC<DashboardProps> = ({
               Simulador de vuelo cognitivo y mitigación de fallas epistémicas. Entrena tu resistencia neuro-cognitiva 
               detectando y refutando alucinaciones y sesgos de la IA mediante la aplicación del **Protocolo de Falsación Adversarial**.
             </p>
+            
+            {/* CTA panel buttons */}
+            <div className="mt-4 flex flex-wrap gap-2.5">
+              <a 
+                href="/admin" 
+                className="btn-primary inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-xl text-white no-underline shadow-lg cursor-pointer"
+                id="dashboard-cta-control-panel"
+              >
+                <LayoutGrid size={14} />
+                Ingresar al Panel de Control
+              </a>
+              <button
+                onClick={handleToggleFullscreen}
+                className="btn-secondary inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl bg-slate-900/40 border-slate-800 text-slate-300 hover:bg-slate-900 hover:text-white cursor-pointer"
+                id="dashboard-toggle-fullscreen"
+              >
+                {isFullscreen ? <Minimize size={14} /> : <Maximize size={14} />}
+                {isFullscreen ? 'Salir de Pantalla Completa' : 'Modo Pantalla Completa'}
+              </button>
+              <button
+                onClick={onLogout}
+                className="btn-secondary inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-xl bg-red-950/20 border-red-900/30 text-red-400 hover:bg-red-950/40 hover:text-red-300 cursor-pointer"
+                id="dashboard-logout"
+              >
+                <LogOut size={14} />
+                Cerrar Sesión
+              </button>
+            </div>
           </div>
           <div className="mt-4 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
-            <span>OPERADOR AUTORIZADO: <strong className="text-slate-200">PILOTO_COGNITIVO</strong></span>
+            <span className="flex items-center gap-1">
+              <User size={12} className="text-accent-secondary" />
+              OPERADOR AUTORIZADO: <strong className="text-slate-200">{currentUser.name}</strong> <span className="text-[10px] text-slate-500 font-mono">({currentUser.role.toUpperCase()})</span>
+            </span>
             <span className="flex items-center gap-1 font-mono text-[10px] text-accent-success"><Activity size={12} className="animate-pulse" /> NÚCLEO_ONLINE</span>
           </div>
         </div>
