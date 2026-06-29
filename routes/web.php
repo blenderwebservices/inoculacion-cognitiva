@@ -62,7 +62,21 @@ Route::get('/', function () {
         ];
     })->toArray();
 
-    return view('landing', compact('user', 'totalUsers', 'avgGovernance', 'avgDesign', 'totalBots', 'leaderboard', 'bots'));
+    // Determine if Mock is active based on resolved API keys
+    $defaultProvider = AiProvider::where('is_default', true)->first();
+    $vendorKey = $defaultProvider?->vendor?->key ?: 'gemini';
+    
+    $apiKey = $defaultProvider?->api_key;
+    if (empty($apiKey) && $user) {
+        $apiKey = $user->gemini_api_key;
+    }
+    if (empty($apiKey)) {
+        $apiKey = env('GEMINI_API_KEY');
+    }
+    
+    $mockActive = ($vendorKey === 'mock' || (empty($apiKey) && $vendorKey !== 'ollama'));
+
+    return view('landing', compact('user', 'totalUsers', 'avgGovernance', 'avgDesign', 'totalBots', 'leaderboard', 'bots', 'mockActive'));
 });
 
 Route::get('/logout', function () {

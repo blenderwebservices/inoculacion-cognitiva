@@ -167,7 +167,26 @@ class ChatSandbox extends Page
         }
 
         $vendorKey = $dbProvider?->vendor?->key ?: 'gemini';
-        $useMock = ($this->activeProvider === 'mock' || $vendorKey === 'mock' || (empty($this->geminiApiKey) && $vendorKey !== 'ollama' && $this->activeProvider !== 'ollama'));
+
+        // Resolve API key with fallback to the default provider
+        $resolvedApiKey = $this->geminiApiKey;
+        if (empty($resolvedApiKey) && $dbProvider) {
+            $resolvedApiKey = $dbProvider->api_key;
+        }
+        if (empty($resolvedApiKey)) {
+            $defaultProvider = AiProvider::where('is_default', true)->first();
+            if ($defaultProvider && !empty($defaultProvider->api_key)) {
+                $resolvedApiKey = $defaultProvider->api_key;
+            }
+        }
+        if (empty($resolvedApiKey)) {
+            $resolvedApiKey = env('GEMINI_API_KEY');
+        }
+
+        $hasWorkingKey = !empty($resolvedApiKey);
+        $useMock = ($vendorKey === 'mock' || 
+                    (empty($resolvedApiKey) && $vendorKey !== 'ollama') || 
+                    ($this->activeProvider === 'mock' && !$hasWorkingKey));
 
         if ($useMock) {
             $mockResponse = '';
@@ -282,9 +301,9 @@ class ChatSandbox extends Page
 
         } else {
             // Actual API call
-            if ($this->activeProvider === 'gemini') {
-                config(['ai.providers.gemini.key' => $this->geminiApiKey]);
-            } elseif ($this->activeProvider === 'ollama') {
+            if ($this->activeProvider === 'gemini' || $vendorKey === 'gemini') {
+                config(['ai.providers.gemini.key' => $resolvedApiKey]);
+            } elseif ($this->activeProvider === 'ollama' || $vendorKey === 'ollama') {
                 config(['ai.providers.ollama.url' => $this->ollamaUrl]);
             }
 

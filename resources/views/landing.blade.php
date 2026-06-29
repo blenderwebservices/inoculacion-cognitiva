@@ -535,7 +535,11 @@
                     </div>
                     <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 0.4rem;">
                         <span style="font-size: 0.75rem; color: var(--text-muted);">Simulador Local (Mock)</span>
-                        <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: bold; color: var(--accent-success);">ACTIVO</span>
+                        @if ($mockActive)
+                            <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: bold; color: var(--accent-warning);">ACTIVO</span>
+                        @else
+                            <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: bold; color: var(--accent-success);">INACTIVO (API REAL)</span>
+                        @endif
                     </div>
                     <div style="display: flex; justify-content: space-between;">
                         <span style="font-size: 0.75rem; color: var(--text-muted);">Modelos Comerciales</span>

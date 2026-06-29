@@ -32,6 +32,10 @@ class AiProviderForm
                         TextInput::make('name')->required()->label('Nombre (Ej. OpenAI)'),
                         TextInput::make('key')->required()->label('Clave interna (Ej. openai)'),
                     ])
+                    ->editOptionForm([
+                        TextInput::make('name')->required()->label('Nombre (Ej. OpenAI)'),
+                        TextInput::make('key')->required()->label('Clave interna (Ej. openai)'),
+                    ])
                     ->required()
                     ->searchable()
                     ->preload()
@@ -49,7 +53,17 @@ class AiProviderForm
                         TextInput::make('name')->required()->label('Nombre (Ej. GPT-4o)'),
                         TextInput::make('key')->required()->label('Identificador (Ej. gpt-4o)'),
                     ])
+                    ->editOptionForm([
+                        TextInput::make('name')->required()->label('Nombre (Ej. GPT-4o)'),
+                        TextInput::make('key')->required()->label('Identificador (Ej. gpt-4o)'),
+                    ])
                     ->createOptionAction(
+                        fn (\Filament\Actions\Action $action) => $action->mutateFormDataUsing(function (array $data, callable $get) {
+                            $data['ai_vendor_id'] = $get('ai_vendor_id');
+                            return $data;
+                        })
+                    )
+                    ->editOptionAction(
                         fn (\Filament\Actions\Action $action) => $action->mutateFormDataUsing(function (array $data, callable $get) {
                             $data['ai_vendor_id'] = $get('ai_vendor_id');
                             return $data;

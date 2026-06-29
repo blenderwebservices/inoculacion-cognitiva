@@ -173,11 +173,22 @@ class ApiController extends Controller
         // Determine actual LLM Vendor key
         $vendorKey = $dbProvider?->vendor?->key ?: 'gemini';
         
-        // Check if database key exists, otherwise check if client provided one, otherwise fallback to mock
-        $apiKey = $dbProvider?->api_key ?: ($request->input('providerConfig.apiKey') ?: env('GEMINI_API_KEY'));
-        
-        // Force mock if configured as mock or if no API key is available (except for Ollama)
-        $useMock = ($provider === 'mock' || $vendorKey === 'mock' || (empty($apiKey) && $vendorKey !== 'ollama'));
+        // Resolve API key with fallback to the default provider
+        $apiKey = $dbProvider?->api_key;
+        if (empty($apiKey)) {
+            $defaultProvider = AiProvider::where('is_default', true)->first();
+            if ($defaultProvider && !empty($defaultProvider->api_key)) {
+                $apiKey = $defaultProvider->api_key;
+            }
+        }
+        if (empty($apiKey)) {
+            $apiKey = $request->input('providerConfig.apiKey') ?: env('GEMINI_API_KEY');
+        }
+
+        $hasWorkingKey = !empty($apiKey);
+        $useMock = ($vendorKey === 'mock' || 
+                    (empty($apiKey) && $vendorKey !== 'ollama') || 
+                    ($provider === 'mock' && !$hasWorkingKey));
 
         // --- 1. MOCK LLM ENGINE FALLBACK ---
         if ($useMock) {
